@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/player.gd" type="Script" id=1]
+[ext_resource path="res://character/character.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/camera.gd" type="Script" id=3]
+
+[sub_resource type="CapsuleShape" id=1]
+
+radius = 0.4
+height = 1.2
+
+[node name="Player" type="KinematicBody"]
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
+collision_mask = 1
+axis_lock_linear_x = false
+axis_lock_linear_y = false
+axis_lock_linear_z = false
+axis_lock_angular_x = false
+axis_lock_angular_y = false
+axis_lock_angular_z = false
+collision/safe_margin = 0.001
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Character" parent="." index="0" instance=ExtResource( 2 )]
+editor/display_folded = true
+state = 1
+
+[node name="Head" parent="Character/Skeleton" index="4"]
+transform = Transform( 0.0166092, 0.996632, 0.0803007, 0.997726, -0.0217681, 0.0638029, 0.065336, 0.0790584, -0.994727, 0.00515028, 1.36323, -0.0132905 )
+
+[node name="Camera" type="Camera" parent="." index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2 )
+keep_aspect = 1
+cull_mask = 1048575
+environment = null
+h_offset = 0.0
+v_offset = 0.0
+doppler_tracking = 0
+projection = 0
+current = true
+fov = 70.0
+size = 1.0
+near = 0.05
+far = 100.0
+script = ExtResource( 3 )
+_sections_unfolded = [ "Transform", "script" ]
+look_at = NodePath("../Character/Skeleton/Head")
+distance = 2.5
+
+[node name="CollisionShape" type="CollisionShape" parent="." index="2"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.95, 0 )
+shape = SubResource( 1 )
+disabled = false
+_sections_unfolded = [ "Transform", "shape" ]
+
+[node name="FloorCast" type="RayCast" parent="." index="3"]
+enabled = true
+exclude_parent = true
+cast_to = Vector3( 0, -1, 0 )
+collision_mask = 1
+_sections_unfolded = [ "Transform" ]
+
+
+[editable path="Character"]
